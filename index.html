@@ -7,8 +7,25 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23007DC3'/%3E%3Cpath d='M50 25 L65 65 L35 65 Z' fill='%23FFD700' stroke='%23fff' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='10' fill='none' stroke='%23FFD700' stroke-width='3'/%3E%3C/svg%3E">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 </head>
 <body>
+    <div id="ig-story-template-container">
+    <div id="ig-story-template">
+        <div class="ig-header">
+            <img id="ig-logo-interact" src="" alt="Logo Interact">
+            <p>¡CONQUISTAMOS NUESTRO IMPERIO!</p>
+        </div>
+        <div id="ig-empire-icon" class="ig-icon"></div>
+        <h2 id="ig-empire-name">IMPERIO ROMANO</h2>
+        <p id="ig-club-name">Interact Club Asunción</p>
+        <div class="ig-footer">
+            <img src="img/camiin.png" alt="Logo CAMIIN" class="ig-logo-camiin">
+            <p>#CAMIIN2025</p>
+        </div>
+    </div>
+</div>
     <div class="main-container">
         <header role="banner">
             <div class="header-content">
@@ -95,13 +112,13 @@
             <section id="result-section" class="section" aria-labelledby="result-title">
                 <div class="result-container">
                     <h2 id="result-title">¡Imperio Asignado!</h2>
-                    <div id="empire-icon" class="empire-icon result-icon"></div>
+                    
                     <div id="empire-spinner-container" class="empire-spinner-container">
-    <div id="empire-spinner" class="empire-spinner">
-        </div>
-</div>
+                        <div id="empire-spinner" class="empire-spinner"></div>
+                    </div>
+                    <h3 id="assigned-empire" class="empire-name" style="display: none;"></h3>
 
-<h3 id="assigned-empire" class="empire-name" style="display: none;"></h3>
+                    <div id="empire-icon" class="empire-icon result-icon"></div>
                     <p id="empire-description" class="empire-desc"></p>
                     <div class="result-details">
                         <p>Club: <strong id="result-club-name"></strong></p>
@@ -117,6 +134,18 @@
                             <span class="material-symbols-outlined">view_list</span>
                             Ver Todas las Asignaciones
                         </button>
+                        <button id="generate-story-btn" class="btn btn-primary">
+                            <span class="material-symbols-outlined">photo_camera</span>
+                            Generar Historia IG
+                        </button>
+                        <div class="share-buttons">
+                            <p>¡Comparte tu conquista!</p>
+                            <div class="share-btn-container">
+                                <a id="share-whatsapp" href="#" target="_blank" class="share-btn whatsapp" aria-label="Compartir en WhatsApp"></a>
+                                <a id="share-twitter" href="#" target="_blank" class="share-btn twitter" aria-label="Compartir en Twitter"></a>
+                                <a id="share-facebook" href="#" target="_blank" class="share-btn facebook" aria-label="Compartir en Facebook"></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>

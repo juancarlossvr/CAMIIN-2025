@@ -270,15 +270,16 @@ header {
 
 .result-icon {
     font-size: 6rem;
-    color: var(--rotary-blue);
+    color: var(--white);
     margin-bottom: var(--space-md);
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
 }
 
-.empire-name { font-size: 3rem; color: var(--rotary-blue); margin-bottom: var(--space-xs); }
+.empire-name { font-size: 3rem; color: var(--rotary-gold); margin-bottom: var(--space-xs); }
 .empire-desc { max-width: 500px; margin: 0 auto var(--space-lg); }
-.result-details { background: var(--light-gray); padding: var(--space-md); border-radius: 8px; max-width: 400px; margin: 0 auto var(--space-lg); }
+.result-details { background: rgba(0,0,0,0.2); padding: var(--space-md); border-radius: 8px; max-width: 400px; margin: 0 auto var(--space-lg); }
 .result-details p { margin: 0; }
-.result-actions { display: flex; justify-content: center; gap: var(--space-md); }
+.result-actions { display: flex; justify-content: center; gap: var(--space-md); flex-wrap: wrap; }
 
 .assignments-controls {
     display: flex;
@@ -309,7 +310,6 @@ header {
 }
 
 .csv-actions { display: flex; gap: var(--space-md); }
-.hidden-input { display: none; }
 
 .assignments-grid {
     display: grid;
@@ -346,16 +346,22 @@ header {
     position: absolute;
     top: 10px;
     right: 10px;
-    background: transparent;
+    background: rgba(255,255,255,0.7);
     border: none;
     cursor: pointer;
     font-size: 1.5rem;
     color: var(--medium-gray);
     opacity: 0.5;
-    transition: opacity 0.3s ease;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .assignment-card:hover .delete-btn { opacity: 1; }
-.delete-btn:hover { color: var(--error); }
+.delete-btn:hover { color: var(--error); background: var(--white); }
 
 .empty-state {
     text-align: center;
@@ -408,19 +414,6 @@ footer {
 @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
 
-@media (max-width: 768px) {
-    h2 { font-size: 2rem; }
-    .header-content { flex-direction: column; gap: var(--space-md); }
-    .assignments-controls, .search-box { flex-direction: column; }
-    .steps-grid, .live-counter, .assignments-grid { grid-template-columns: 1fr; }
-}
-
-@media (max-width: 480px) {
-    .empire-icon { font-size: 4rem; }
-    .stat-number { font-size: 2.5rem; }
-    .notification-container { top: 10px; right: 10px; left: 10px; width: auto; }
-}
-
 .material-symbols-outlined {
     font-family: 'Material Symbols Outlined';
     font-weight: normal;
@@ -438,10 +431,24 @@ footer {
     -webkit-font-smoothing: antialiased;
 }
 
-/* --- Estilos para la Animación de Revelación --- */
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    color: var(--rotary-blue);
+    z-index: 2000;
+    backdrop-filter: blur(5px);
+}
 
 .empire-spinner-container {
-    height: 100px; /* Altura de la 'ventana' de la ruleta */
+    height: 100px;
     overflow: hidden;
     position: relative;
     background: var(--neutral-medium);
@@ -457,47 +464,227 @@ footer {
     top: 0;
     left: 0;
     width: 100%;
-    transition: transform 3s cubic-bezier(0.25, 1, 0.5, 1); /* Transición suave */
+    transition: transform 3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .empire-spinner-item {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100px; /* Debe coincidir con la altura del contenedor */
+    height: 100px;
     font-family: var(--font-display);
     font-size: 2.5rem;
     color: var(--rotary-blue);
 }
 
-/* Clase para la revelación final del título */
 .empire-name.revealed {
     display: block !important;
     animation: zoomIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
 @keyframes zoomIn {
-    from {
-        opacity: 0;
-        transform: scale(0.5);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 1; transform: scale(1); }
 }
-.loader {
-    position: fixed;
-    top: 0;
-    left: 0;
+
+#result-section {
+    background-size: cover;
+    background-position: center center;
+    transition: background-image 0.8s ease-in-out;
+    border-radius: 12px;
+    position: relative;
+    z-index: 1;
+    padding: var(--space-xl);
+}
+
+#result-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(13, 27, 76, 0.75);
+    border-radius: 12px;
+    z-index: -1;
+    backdrop-filter: blur(2px);
+}
+
+#result-section h2, #result-section h3,
+#result-section p, #result-section strong {
+    color: var(--white);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.theme-romano { background-image: url('backgrounds/romano.jpg'); }
+.theme-egipcio { background-image: url('backgrounds/egipcio.jpg'); }
+.theme-vikingo { background-image: url('backgrounds/vikingo.jpg'); }
+.theme-azteca { background-image: url('backgrounds/azteca.jpg'); }
+.theme-japones { background-image: url('backgrounds/japones.jpg'); }
+.theme-persa { background-image: url('backgrounds/persa.jpg'); }
+.theme-otomano { background-image: url('backgrounds/otomano.jpg'); }
+.theme-inca { background-image: url('backgrounds/inca.jpg'); }
+.theme-mongol { background-image: url('backgrounds/mongol.jpg'); }
+.theme-bizantino { background-image: url('backgrounds/bizantino.jpg'); }
+.theme-espartano { background-image: url('backgrounds/espartano.jpg'); }
+.theme-chino { background-image: url('backgrounds/chino.jpg'); }
+.theme-britanico { background-image: url('backgrounds/britanico.jpg'); }
+.theme-mali { background-image: url('backgrounds/mali.jpg'); }
+.theme-zulu { background-image: url('backgrounds/zulu.jpg'); }
+.theme-espanol { background-image: url('backgrounds/espanol.jpg'); }
+.theme-griego { background-image: url('backgrounds/griego.jpg'); }
+
+.share-buttons {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
     width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.8);
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    font-size: 1.5rem;
-    color: var(--rotary-blue);
-    z-index: 2000;
-    backdrop-filter: blur(5px);
+    gap: var(--space-sm);
+}
+
+.share-buttons p {
+    margin-bottom: var(--space-xs);
+    font-weight: 500;
+}
+
+.share-btn-container {
+    display: flex;
+    gap: var(--space-md);
+}
+
+.share-btn {
+    display: inline-block;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+}
+
+.share-btn:hover {
+    transform: scale(1.1);
+}
+
+.share-btn svg {
+    width: 24px;
+    height: 24px;
+    margin: 10px;
+    fill: var(--white);
+}
+
+.share-btn.whatsapp { background-color: #25D366; }
+.share-btn.twitter { background-color: #1DA1F2; }
+.share-btn.facebook { background-color: #1877F2; }
+
+@media (max-width: 768px) {
+    h2 { font-size: 2rem; }
+    .header-content { flex-direction: column; gap: var(--space-md); }
+    .assignments-controls, .search-box { flex-direction: column; }
+    .steps-grid, .live-counter, .assignments-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+    .empire-icon { font-size: 4rem; }
+    .stat-number { font-size: 2.5rem; }
+    .notification-container { top: 10px; right: 10px; left: 10px; width: auto; }
+}
+/* --- Estilos para Generador de Historia de Instagram --- */
+
+/* Contenedor que esconde la plantilla fuera de la pantalla */
+#ig-story-template-container {
+    position: fixed;
+    top: -9999px;
+    left: -9999px;
+}
+
+/* El diseño de la historia (9:16) */
+#ig-story-template {
+    width: 1080px; /* Ancho estándar de historia */
+    height: 1920px; /* Alto estándar de historia */
+    background-color: #0D1B4C; /* Fondo oscuro */
+    color: white;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 80px;
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+#ig-story-template::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5); /* Overlay oscuro para legibilidad */
+}
+
+/* Estilos para el contenido de la historia */
+.ig-header, .ig-footer, #ig-empire-icon, #ig-empire-name, #ig-club-name {
+    position: relative;
+    z-index: 2;
+}
+
+.ig-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+#ig-logo-interact {
+    width: 200px;
+}
+
+.ig-header p {
+    font-size: 50px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    border: 3px solid white;
+    padding: 15px 30px;
+    border-radius: 50px;
+}
+
+.ig-icon .material-symbols-outlined {
+    font-size: 400px; /* Ícono gigante */
+    text-shadow: 0 5px 20px rgba(0,0,0,0.5);
+}
+
+#ig-empire-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 150px;
+    color: var(--rotary-gold);
+    text-transform: uppercase;
+    margin: 0;
+    text-shadow: 0 5px 20px rgba(0,0,0,0.7);
+}
+
+#ig-club-name {
+    font-size: 70px;
+    margin-top: -20px;
+}
+
+.ig-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.ig-logo-camiin {
+    width: 300px;
+}
+
+.ig-footer p {
+    font-size: 60px;
+    font-weight: 700;
+    color: var(--rotary-gold);
+}
+
+/* Estilo para el nuevo botón */
+#generate-story-btn {
+    background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); /* Gradiente de Instagram */
+    color: white;
 }
